@@ -12,4 +12,6 @@ homebrew_installed_packages:
 
 homebrew_cask_apps:
   - firefox
+  - google-drive
   - licecap
+  - maccy

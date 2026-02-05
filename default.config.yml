@@ -91,10 +91,12 @@ homebrew_cask_apps:
   - figma
   - firefox
   - google-chrome
+  - google-drive
   - granola
   - handbrake
   - licecap
   - loom
+  - maccy
   - notion
   - orbstack
   - rectangle
