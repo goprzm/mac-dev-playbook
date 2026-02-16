@@ -134,6 +134,7 @@ Applications (installed with Homebrew Cask):
 
 Packages (installed with Homebrew):
 
+  - agent-browser
   - autoconf
   - bash-completion
   - doxygen
