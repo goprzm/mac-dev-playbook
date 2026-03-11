@@ -23,7 +23,7 @@
 
     - name: Enable passwordless sudo for the current user (needed for cask pkg installers).
       copy:
-        content: "{{ ansible_user_id }} ALL=(ALL) NOPASSWD: ALL\n"
+        content: "{{ ansible_facts['user_id'] }} ALL=(ALL) NOPASSWD: ALL\n"
         dest: /private/etc/sudoers.d/ansible-temp-nopasswd
         mode: '0440'
         validate: 'visudo -cf %s'
