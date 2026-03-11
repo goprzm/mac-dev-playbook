@@ -21,10 +21,20 @@
         - "{{ playbook_dir }}/config.yml"
       tags: ['always']
 
+    - name: Enable passwordless sudo for the current user (needed for cask pkg installers).
+      copy:
+        content: "{{ ansible_user_id }} ALL=(ALL) NOPASSWD: ALL\n"
+        dest: /private/etc/sudoers.d/ansible-temp-nopasswd
+        mode: '0440'
+        validate: 'visudo -cf %s'
+      become: true
+      tags: ['always']
+
   roles:
     - role: elliotweiser.osx-command-line-tools
     - role: geerlingguy.mac.homebrew
       tags: ['homebrew']
+      ignore_errors: true
     - role: geerlingguy.dotfiles
       when: configure_dotfiles
       tags: ['dotfiles']
@@ -71,3 +81,10 @@
           loop_control:
             loop_var: outer_item
           with_fileglob: "{{ post_provision_tasks | default(omit) }}"
+
+    - name: Remove temporary passwordless sudo rule.
+      file:
+        path: /private/etc/sudoers.d/ansible-temp-nopasswd
+        state: absent
+      become: true
+      tags: ['always']
