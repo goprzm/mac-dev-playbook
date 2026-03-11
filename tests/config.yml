@@ -1,5 +1,6 @@
 ---
 homebrew_installed_packages:
+  - agent-browser
   - autoconf
   - bash-completion
   - gettext
