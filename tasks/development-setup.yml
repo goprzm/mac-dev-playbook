@@ -56,12 +56,12 @@
 - name: Configure gh git protocol to use https.
   command: gh config set git_protocol https
   changed_when: false
-  when: gh_auth_status.rc == 0
+  when: gh_auth_status.rc | default(1) == 0
 
 - name: Setup gh as git credential helper.
   command: gh auth setup-git
   changed_when: false
-  when: gh_auth_status.rc == 0
+  when: gh_auth_status.rc | default(1) == 0
 
 - name: Clone PRZM repository.
   git:
