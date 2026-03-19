@@ -87,4 +87,5 @@
         path: /private/etc/sudoers.d/ansible-temp-nopasswd
         state: absent
       become: true
+      when: lookup('env', 'CI') == ''
       tags: ['always']

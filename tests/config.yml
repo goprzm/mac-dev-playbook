@@ -1,4 +1,8 @@
 ---
+# Disable features that require interactivity or apps not present in CI.
+configure_development_setup: false
+configure_macos_settings: false
+
 homebrew_installed_packages:
   - agent-browser
   - autoconf
