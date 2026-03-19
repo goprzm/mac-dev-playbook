@@ -30,7 +30,9 @@
   failed_when: false
 
 - name: Prompt user to authenticate with GitHub CLI.
-  when: gh_auth_status.rc != 0
+  when:
+    - gh_auth_status.rc != 0
+    - lookup('env', 'CI') == ''
   block:
     - name: Display GitHub authentication instructions.
       pause:
@@ -49,14 +51,17 @@
     - name: Verify GitHub CLI authentication after prompt.
       command: gh auth status
       changed_when: false
+      register: gh_auth_status
 
 - name: Configure gh git protocol to use https.
   command: gh config set git_protocol https
   changed_when: false
+  when: gh_auth_status.rc == 0
 
 - name: Setup gh as git credential helper.
   command: gh auth setup-git
   changed_when: false
+  when: gh_auth_status.rc == 0
 
 - name: Clone PRZM repository.
   git:
@@ -144,7 +149,7 @@
   args:
     executable: /bin/zsh
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: Check if przm repo exists.
   stat:
